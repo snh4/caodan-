@@ -37,19 +37,6 @@ export default {
       loading:false,
       tableData: [
         {
-    //       view_id: '1',
-    // itemNumber: 'ABC123',
-    // specification_model: 'Sample Product A',
-    // first_legal_quantity_unit: '2',
-    // first_legal_quantity: '100.00',
-    // second_legal_quantity_unit: null,
-    // second_legal_quantity: '43434343.00',
-    // unit_price: '10.00',
-    // total_Price: '1000.00',
-    // currency_code: 'USD',
-    // origin: 'USA',
-    // destination_country: 'Germany',
-    // TaxExemption: 'Exempt'
       view_id: 1,
       specification_model: null,
       first_legal_quantity_unit: null,
@@ -69,110 +56,11 @@ export default {
       transaction_quantity: null,
       total_price: null,
       DomesticSourceOfGoods: null
-        },
-        {
-          view_id: 2,
-      specification_model: "test|test|test|",
-      first_legal_quantity_unit: null,
-      first_legal_quantity: "100.00",
-      second_legal_quantity_unit: null,
-      second_legal_quantity: "200.00",
-      unit_price: "10.00",
-      total_Price: "1000.00",
-      currency_code: "123",
-      origin: "中国(CHN)",
-      destination_country: "USA",
-      TaxExemption: "照章征税",
-      bgd_id: 1,
-      item_number: 1,
-      product_code: 1234,
-      product_name: "spx",
-      transaction_quantity: "10.00",
-      total_price: "100.00",
-      DomesticSourceOfGoods: null
-        },
-        {
-          view_id: 3,
-      specification_model: "test|test|test|",
-      first_legal_quantity_unit: "100",
-      first_legal_quantity: "100.00",
-      second_legal_quantity_unit: "100",
-      second_legal_quantity: "200.00",
-      unit_price: "10.00",
-      total_Price: "1000.00",
-      currency_code: "123",
-      origin: "中国(CHN)",
-      destination_country: "USA",
-      TaxExemption: "照章征税",
-      bgd_id: 1,
-      item_number: 1,
-      product_code: 1234,
-      product_name: "spx",
-      transaction_quantity: "10.00",
-      total_price: "100.00",
-      DomesticSourceOfGoods: null
         }
       ],
 
       form: {
-        // DomesticShipper: "qdn",
-        // DestinationUnloadingPort: "海关",
-        // exUnloadingPortDate: "",
-        // declareDate: "",
-        // recordNo: "123456789",
-        // ArrivalCountry: "qqddnn",
-        // transUnloadingPortMode: "",
-        // VesselVoyage: "",
-        // BillOfLading: "123456",
-        // Manufacturer: "qdn公司",
-        // supervisionMode: "",
-        // TaxExemptionNature: "",
-        // licenseNo: "123456",
-        // contractNo: "123456",
-        // CountryOfDeparture: "China",
-        // ArrivalCountry: "first_legal_quantity_united States",
-        // UnloadingPort: "China",
-        // DeparturePort: "China",
-        // packaging: "纸箱",
-        // NumberOfPackage: 77,
-        // GrossWeight: 17.5,
-        // Netweight: 100.2,
-        // TransactionMethod: "",
-        // freight: 100.5,
-        // insurance: 30.2,
-        // miscellaneous: 10.0,
-        // documents: "发票单",
-        // remarks: ""
-  //       DomesticShipper: "100000",
-  // DestinationUnloadingPort: "test2",
-  // exUnloadingPortDate: "", // 需要根据后端数据匹配日期格式
-  // declareDate: "", // 需要根据后端数据匹配日期格式
-  // recordNo: "123456789",
-  // ArrivalCountry: "qqddnn",
-  // transUnloadingPortMode: "", // 需要根据后端数据匹配
-  // VesselVoyage: "test",
-  // BillOfLading: "123456",
-  // Manufacturer: "qdn公司",
-  // supervisionMode: "", // 需要根据后端数据匹配
-  // TaxExemptionNature: "", // 需要根据后端数据匹配
-  // licenseNo: "123456",
-  // contractNo: "123456",
-  // CountryOfDeparture: "China",
-  // ArrivalCountry: "first_legal_quantity_united States",
-  // UnloadingPort: "China",
-  // DeparturePort: "China",
-  // packaging: "纸箱",
-  // NumberOfPackage: 77,
-  // GrossWeight: 17.5,
-  // Netweight: 100.2,
-  // TransactionMethod: "", // 需要根据后端数据匹配
-  // freight: 100.5,
-  // insurance: 30.2,
-  // miscellaneous: 10.0,
-  // documents: "发票单",
-  // remarks: ""
-  //后端数据库没有的几个字段：
-    CustomDeclarationId: 1,
+  CustomDeclarationId: 1,
   ContractFormID: "1",
   ContractTableID: 1,
   InvoiceId: 1,
@@ -184,7 +72,7 @@ export default {
   recordNo:null,
   ArrivalCountry: "USA",
   AttachedDocumentsAndNumbers: null,
-  BillOfLading: "test",
+  BillOfLading: null,
   ContractNumber: "123",
   CountryOfDeparture: "CHN",
   DeparturePort: "青岛",
@@ -194,8 +82,8 @@ export default {
   Freight: null,
   GrossWeight: "300.00000",
   LicenseNumber: null,
-  LoadingPort:"test",
-  Manufacturer: "test",
+  LoadingPort:null,
+  Manufacturer: null,
   MarkingCodeAndRemarks: "M/N",
   MiscellaneousCharges: null,
   NatureOfTaxExemption: "一般征税",
@@ -328,13 +216,19 @@ export default {
             ,"AttachedDocumentsAndNumbers","TotalPrice","DomesticSourceLocation","TransitPort_DestinationPort","MiscellaneousCharges"];
             // 为空的且不为不需要的边框标红
             for (const key in this.form) {
-      if (key) {
+              if (key) {
         if ((this.form[key]==null || this.form[key]=='')&& !unuse.includes(key)) {
-          console.log("modified");
+          console.log(key,"modified");
           const inputElement = document.querySelector(`.${key}`);
           if (inputElement) {
             console.log("changeColor");
             inputElement.style.backgroundColor = 'red';
+            const innerElement = inputElement.querySelector('.el-input__wrapper');
+            if(innerElement){
+              innerElement.style.backgroundColor = 'red';
+            }else{
+              console.error("没有找到内部控件");
+            }
           } else {
             
             console.log('没有找到此控件:',key);
@@ -350,24 +244,21 @@ export default {
     console.log(initialView);
     
     for (const key in initialView) {
-      console.log(key);
       if (key) {
         if (initialView[key] == null || initialView[key]=='') {
-          console.log("为空");
-          
-          // const inputElement = document.querySelector(`.${key}-${initialView["view_id"]}`);
-          // if (inputElement) {
-          //   console.log("changeColor");
-          //   inputElement.style.backgroundColor = 'red';
-          // } else {
-          //   console.error('没有找到此控件');
-          // }
+          console.log(key,"为空");
           this.$nextTick(() => {
           const inputElement = document.querySelector(`.${key}-${initialView["view_id"]}`);
           console.log(inputElement);
           if (inputElement) {
             console.log("changeColor");
             inputElement.style.backgroundColor = 'red';
+            const innerElement = inputElement.querySelector('.el-input__wrapper');
+            if(innerElement){
+              innerElement.style.backgroundColor = 'red';
+            }else{
+              console.error("没有找到内部控件");
+            }
           } else {
             console.error('没有找到此控件');
           }
@@ -617,10 +508,16 @@ markModifiedFields(updatedData) {
 
             const innerInputElement = inputElement.querySelector('.el-input__inner');
               if (innerInputElement) {
-                innerInputElement.style.color = 'blue';
+                innerInputElement.style.color = 'yellow';
               }else{
                 console.error('没有找到内部控件');
               }
+              const innerElement = inputElement.querySelector('.el-input__wrapper');
+            if(innerElement){
+              innerElement.style.backgroundColor = 'blue';
+            }else{
+              console.error("没有找到内部控件");
+            }
           } else {
             console.error('没有找到此控件');
           }
@@ -645,11 +542,17 @@ markModifiedFields(updatedData) {
             inputElement.style.backgroundColor = 'blue';
 
             const innerInputElement = inputElement.querySelector('.el-input__inner');
-              if (innerInputElement) {
-                innerInputElement.style.color = 'blue';
+            if (innerInputElement) {
+                innerInputElement.style.color = 'yellow';
               }else{
                 console.error('没有找到内部控件');
               }
+              const innerElement = inputElement.querySelector('.el-input__wrapper');
+            if(innerElement){
+              innerElement.style.backgroundColor = 'blue';
+            }else{
+              console.error("没有找到内部控件");
+            }
           } else {
             console.error('没有找到此控件');
           }
@@ -703,6 +606,10 @@ markModifiedFields(updatedData) {
           console.log('用户取消删除操作');
       }
     },
+    returnToList(){
+    this.$router.push({ path: '/home' })
+
+  }
 
   }
   
@@ -727,6 +634,8 @@ markModifiedFields(updatedData) {
       <el-button type="primary" @click="uploadFiles">机器生成草单</el-button>
       <el-button type="success" @click="review">人工审核</el-button>
       <el-button type="success" @click="machineReview">机器复核</el-button>
+      <el-button type="success" @click="returnToList">返回处理记录列表</el-button>
+
     </div>
     <div>
       <!-- <splitpanes class="default-theme" style="height: 100%; width: 100% ; margin-bottom: 0px; margin-left: 0px;" :disable-sync="true"> -->
@@ -784,13 +693,13 @@ markModifiedFields(updatedData) {
                       <el-form-item label="出境关别">
                         <el-input v-model="form.LoadingPort" class="LoadingPort" @input="testAutoChangeColor('LoadingPort')"></el-input>
                       </el-form-item>
-                      <el-form-item label="出口日期(无)">
+                      <el-form-item label="出口日期">
                         <el-date-picker v-model="form.exUnloadingPortDate" type="date" @change="testAutoChangeColor('exUnloadingPortDate')" class="exUnloadingPortDate"></el-date-picker>
                       </el-form-item>
-                      <el-form-item label="申报日期(无)">
+                      <el-form-item label="申报日期">
                         <el-date-picker v-model="form.declareDate" type="date" @change="testAutoChangeColor('declareDate')" class="declareDate"></el-date-picker>
                       </el-form-item>
-                      <el-form-item label="备案号(无)">
+                      <el-form-item label="备案号">
                         <el-input v-model="form.recordNo" @input="testAutoChangeColor('recordNo')" class="recordNo"></el-input>
                       </el-form-item>
                       <el-form-item label="境外收货人">
@@ -813,20 +722,20 @@ markModifiedFields(updatedData) {
                       <el-form-item label="生产销售单位">
                         <el-input v-model="form.Manufacturer" @input="testAutoChangeColor('Manufacturer')" class="Manufacturer"></el-input>
                       </el-form-item>
-                      <el-form-item label="监管方式(默认一般贸易)">
+                      <el-form-item label="监管方式">
                         <el-select v-model="form.SupervisionMethod" @change="testAutoChangeColor('SupervisionMethod')" class="SupervisionMethod">
                           <el-option label="一般监管" value="General"></el-option>
                           <el-option label="集中申报" value="Centralized"></el-option>
                         </el-select>
                       </el-form-item>
-                      <el-form-item label="征免性质(一般征税)">
+                      <el-form-item label="征免性质">
                         <el-select v-model="form.NatureOfTaxExemption" @change="testAutoChangeColor('NatureOfTaxExemption')" class="NatureOfTaxExemption">
                           <el-option label="非征免" value="Non-exempt"></el-option>
                           <el-option label="征税" value="Taxable"></el-option>
                           <el-option label="免税" value="Exempt"></el-option>
                         </el-select>
                       </el-form-item>
-                      <el-form-item label="许可证号（没有）">
+                      <el-form-item label="许可证号">
                         <el-input v-model="form.LicenseNumber" @input="testAutoChangeColor('LicenseNumber')" class="LicenseNumber"></el-input>
                       </el-form-item>
                       <el-form-item label="合同协议号">
@@ -866,19 +775,19 @@ markModifiedFields(updatedData) {
                           <el-option label="其他" value="Other"></el-option>
                         </el-select>
                       </el-form-item>
-                      <el-form-item label="运费(默认没有)">
+                      <el-form-item label="运费">
                         <el-input v-model="form.Freight"  @input="testAutoChangeColor('Freight')" class="Freight"></el-input>
                       </el-form-item>
-                      <el-form-item label="保费(没有)">
+                      <el-form-item label="保费">
                         <el-input v-model="form.Premium"  @input="testAutoChangeColor('Premium')" class="Premium"></el-input>
                       </el-form-item>
-                      <el-form-item label="杂费（没有）">
+                      <el-form-item label="杂费">
                         <el-input v-model="form.MiscellaneousCharges"  @input="testAutoChangeColor('MiscellaneousCharges')" class="MiscellaneousCharges"></el-input>
                       </el-form-item>
-                      <el-form-item label="随附单证及编号（没有）">
+                      <el-form-item label="随附单证及编号">
                         <el-input v-model="form.RegistrationNumber" @input="testAutoChangeColor('RegistrationNumber')" class="RegistrationNumber"></el-input>
                       </el-form-item>
-                      <el-form-item label="标注唛码及备注（默认M/N ）" @input="testAutoChangeColor('MarkingCodeAndRemarks')">
+                      <el-form-item label="标注唛码及备注" @input="testAutoChangeColor('MarkingCodeAndRemarks')">
                         <el-input v-model="form.MarkingCodeAndRemarks" class="MarkingCodeAndRemarks"></el-input>
                       </el-form-item>
                     </el-col>
