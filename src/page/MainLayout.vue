@@ -21,7 +21,7 @@
     </el-header>
 
     <el-main class="el-main">
-      <el-tabs
+      <!-- <el-tabs
         type="border-card"
         v-model="activeTabName"
         class="demo-tabs"
@@ -37,7 +37,18 @@
         >
           <router-view />
         </el-tab-pane>
-      </el-tabs>
+      </el-tabs> -->
+      <div class="demo-tabs">
+        <div v-for="item in editableTabs" :key="item.index" v-show="isActiveTab(item)">
+          <div class="tab-header" @click="handleSwitchRoute(item)">
+            {{ item.title }}
+            <span v-if="handleisClose(item)" @click="handleRemove(item)">x</span>
+          </div>
+          <div class="tab-content">
+            <router-view v-if="activeTabName === item.index" />
+          </div>
+        </div>
+      </div>
     </el-main>
   </div>
 </template>
@@ -96,6 +107,9 @@ export default {
       return false;
       }
       return true;
+    },
+    isActiveTab(item) {
+      return this.activeTabName === item.index;
     },
     //点击二级菜单标题 和 没有下一级菜单的标题
     //添加显示的标签

@@ -35,26 +35,27 @@ const $router = useRouter();
 // let password = "maypassword";
 
 const setFlag = async () => {
+  try {
     const response = await api.post('/login/', {
       username: username.value,
       password: password.value,
     });
-    // console.log("test")
-    // console.log(response.data)
     // 根据后端返回的数据进行处理
     if (response.data.status) {
-      // 登录成功，可以进行页面跳转等操作
-      //利用localstorage存储到本地
-      // localStorage.setItem("token",response.data.token)
-      // localStorage.setItem('token',response.data.token);
-      sessionStorage.setItem("token",response.data.token);
-
-      // console.log(response.data)
+      sessionStorage.setItem("token", response.data.token);
+      // 登录成功，显示成功对话框
+      window.alert("登录成功");
       $router.replace('/');
     } else {
-      // 登录失败，显示错误信息等
+      // 登录失败，显示失败对话框
+      this.showErrorDialog("登录失败，请检查用户名和密码是否正确");
       console.error('Login failed:', response.data.message);
     }
+  } catch (error) {
+    // 捕捉异常，可以是网络错误或其他问题
+    console.error('Error during login:', error.message);
+    window.alert("登录失败，请检查用户名或密码输入是否正确");
+  }
   } 
 </script>
 

@@ -42,22 +42,28 @@
           <span>{{ $index + 1  }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="ManualReviewPersonnel" label="审核人" sortable></el-table-column>
       <el-table-column prop="CompanyName" label="公司名称" sortable></el-table-column>
+
+      <el-table-column prop="ManualReviewPersonnel" label="审核人" sortable></el-table-column>
       <!-- <el-table-column prop="number" label="预录入编号" sortable></el-table-column> -->
+
+      
+      
+      <!-- <el-table-column prop="DragName" label="草单名称" sortable></el-table-column> -->
+      <el-table-column prop="DomesticShipper" label="境内发货人" sortable></el-table-column>
+      <el-table-column prop="OverseasConsignee" label="境外收货人" sortable></el-table-column>
 
       <el-table-column prop="DataEntryTime" label="数据录入时间" sortable></el-table-column>
       <el-table-column prop="ManualReviewTime" label="人工审核时间" sortable></el-table-column>
       <el-table-column prop="ReviewTime" label="机器复核时间" sortable></el-table-column>
       <el-table-column prop="ManualReviewStatus" label="审核状态" sortable></el-table-column>
-      
-      <!-- <el-table-column prop="DragName" label="草单名称" sortable></el-table-column> -->
-      <el-table-column prop="DomesticShipper" label="国内托运人" sortable></el-table-column>
-      <el-table-column prop="OverseasConsignee" label="海外收货人" sortable></el-table-column>
       <el-table-column label="操作">
         <template #default="{ row,$index }">
-          <el-button @click="editItem(row)" type="success">编辑</el-button>
-          <el-button @click="deleteItem(row,$index)" type="danger">删除</el-button>
+          <div>
+            <el-button @click="editItem(row)" type="success">编辑</el-button>
+            <el-button @click="deleteItem(row,$index)" type="danger">删除</el-button>
+          </div>
+          
         </template>
       </el-table-column>
     </el-table>

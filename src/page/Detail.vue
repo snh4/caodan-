@@ -195,15 +195,15 @@ export default {
       }
             try {
               this.dialogVisible = true;
-              const instance = this.$loading({
-                target: '.el-dialog'
-              });
+              // const instance = this.$loading({
+              //   target: '.el-dialog'
+              // });
               const response = await api.post('upload/', formData, {
               headers: {
                 'Content-Type': 'multipart/form-data', // 使用 multipart/form-data 类型
               },
             });
-            instance.close();
+            // instance.close();
               console.log('Files uploaded successfully:', response);
               this.isLoading = false;
               this.dialogVisible = false;
@@ -212,7 +212,7 @@ export default {
               this.form = response.data.bgd;
             this.tableData = response.data.view.map((item) => ({ ...item }));
 
-            var unuse = ["exUnloadingPortDate","declareDate","recordNo","LicenseNumber","Freight","Premium","RegistrationNumber"
+            var unuse = ["exUnloadingPortDate","declareDate","recordNo","LicenseNumber","Freight","Premium","RegistrationNumber",
             ,"AttachedDocumentsAndNumbers","TotalPrice","DomesticSourceLocation","TransitPort_DestinationPort","MiscellaneousCharges"];
             // 为空的且不为不需要的边框标红
             for (const key in this.form) {
@@ -222,10 +222,10 @@ export default {
           const inputElement = document.querySelector(`.${key}`);
           if (inputElement) {
             console.log("changeColor");
-            inputElement.style.backgroundColor = 'red';
+            // inputElement.style.backgroundColor = 'red';
             const innerElement = inputElement.querySelector('.el-input__wrapper');
             if(innerElement){
-              innerElement.style.backgroundColor = 'red';
+              innerElement.style.backgroundColor = 'rgba(255,0,0,0.3)';
             }else{
               console.error("没有找到内部控件");
             }
@@ -252,10 +252,10 @@ export default {
           console.log(inputElement);
           if (inputElement) {
             console.log("changeColor");
-            inputElement.style.backgroundColor = 'red';
+            // inputElement.style.backgroundColor = 'red';
             const innerElement = inputElement.querySelector('.el-input__wrapper');
             if(innerElement){
-              innerElement.style.backgroundColor = 'red';
+              innerElement.style.backgroundColor = 'rgba(255,0,0,0.3)';
             }else{
               console.error("没有找到内部控件");
             }
@@ -317,6 +317,8 @@ export default {
              extension === 'xlsx'? 'xlsx' : 'unknown';
     },
     async review(){
+      this.dialogVisible = true;
+
       try {
       // 获取要发送的数据
       const dataToSend = {
@@ -324,14 +326,6 @@ export default {
         view: this.tableData,      // 从表单数据中获取
       };
       console.log(this.tableData);
-      // const recordId = this.$route.params.id;
-      // const response_d = await api.get(`/detail/${recordId}`);
-      // this.detailData = response.data;
-      //暂存数据用于和人工审核对比
-      // console.log(this.initialFormData);
-      // if(this.realID !=null||this.mode=="edit"){
-      //   this.markModifiedFields(dataToSend);
-      // }
       var response = null;
       // 发送PUT请求到Django后端
       // const re_mode = this.$route.params.mode;
@@ -346,17 +340,20 @@ export default {
         response = await api.put(`/detail/${recordId}`, dataToSend);
 
       }
-
       // 处理成功的响应
       console.log(response.data);
       // 可以在这里添加成功后的逻辑
-
+      await this.sleep(500);
+      this.dialogVisible = false;
     } catch (error) {
       // 处理错误
       console.error('Error submitting form:', error);
       // 可以在这里添加处理错误的逻辑
     }
     },
+    sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+},
 
     // 添加新行
     addNewRow() {
@@ -482,6 +479,8 @@ markModifiedFields(updatedData) {
       var response = null;
       // 发送PUT请求到Django后端
       // const re_mode = this.$route.params.mode;
+      this.dialogVisible = true;
+
       if(this.mode == "new"){
         // console.log("detail/new put");
         // console.log(this.realID);
@@ -497,7 +496,7 @@ markModifiedFields(updatedData) {
       // 确保 key 不为空且是 updatedData.bgd 的自有属性
       if (key) {
         // console.log(this.initialFormData.bgd[key]+"--"+updatedData.bgd[key]);
-        if (this.form[key] !== response.data.bgd[key]) {
+        if (this.form[key] !== response.data.bgd[key] || response.data.bgd[key]=='-1') {
           // 确保属性存在，并且值发生变化，将其标记为已修改
           console.log(response.data);
           console.log("modified");
@@ -532,7 +531,7 @@ markModifiedFields(updatedData) {
 
     for (const key in initialView) {
       if (key) {
-        if (initialView[key] !== updatedView[key]) {
+        if (initialView[key] !== updatedView[key]|| response.data.bgd[key]=='-1') {
           console.log("modified view");
           const inputElement = document.querySelector(`.${key}-${initialView["view_id"]}`);
 
@@ -560,6 +559,10 @@ markModifiedFields(updatedData) {
       }
     }
   }
+  await this.sleep(500);
+
+  this.dialogVisible = false;
+
 
   },
   testAutoChangeColor(className){
@@ -662,7 +665,7 @@ markModifiedFields(updatedData) {
                   ref="fileInput"
                   style="display: none"
                   @change="changeHandle"
-                  accept=".pdf,.doc,.docx,.xls,.xlsx"
+                  accept=".pdf,.doc,.docx,.xls,.xlsx,.txt"
                   multiple
                 />
               
@@ -705,10 +708,14 @@ markModifiedFields(updatedData) {
                       <el-form-item label="境外收货人">
                         <el-input v-model="form.OverseasConsignee" @input="testAutoChangeColor('OverseasConsignee')" class="OverseasConsignee"></el-input>
                       </el-form-item>
-                      <el-form-item label="运输方式(默认水路运输)">
+                      <el-form-item label="运输方式">
                         <el-select v-model="form.TransportationMethod" @change="testAutoChangeColor('TransportationMethod')" class="TransportationMethod">
-                          <el-option label="水路运输" value="Sea" ></el-option>
-                          <el-option label="空运" value="Air"></el-option>
+                          <el-option label="水路运输" value="水路运输" ></el-option>
+                          <el-option label="航空运输" value="航空运输"></el-option>
+                          <el-option label="铁路运输" value="铁路运输"></el-option>
+                          <el-option label="公路运输" value="公路运输"></el-option>
+                          <el-option label="邮件运输" value="邮件运输"></el-option>
+                          <el-option label="其他运输" value="其他运输"></el-option>
                         </el-select>
                       </el-form-item>
                       <el-form-item label="运输工具名称及航次号">
@@ -730,9 +737,7 @@ markModifiedFields(updatedData) {
                       </el-form-item>
                       <el-form-item label="征免性质">
                         <el-select v-model="form.NatureOfTaxExemption" @change="testAutoChangeColor('NatureOfTaxExemption')" class="NatureOfTaxExemption">
-                          <el-option label="非征免" value="Non-exempt"></el-option>
-                          <el-option label="征税" value="Taxable"></el-option>
-                          <el-option label="免税" value="Exempt"></el-option>
+                          <el-option label="一般征税" value="Taxable"></el-option>
                         </el-select>
                       </el-form-item>
                       <el-form-item label="许可证号">
